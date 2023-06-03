@@ -45,5 +45,6 @@ def fetch(url) -> Optional[FetchedContent]:
         logging.exception("Failed to fetch %s", url)
     return None
 
+
 if __name__ == "__main__":
     print(fetch("https://www.klue.com/"))

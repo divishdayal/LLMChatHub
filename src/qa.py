@@ -2,11 +2,10 @@ import logging
 from typing import List, Optional
 
 from langchain.chat_models import ChatOpenAI
-from langchain.document_loaders import TextLoader, SeleniumURLLoader
+from langchain.document_loaders import SeleniumURLLoader, TextLoader
 from langchain.indexes import VectorstoreIndexCreator
 
 logger = logging.getLogger(__name__)
-
 
 
 def _add_loaders(text_files: List[str], urls: List[str]) -> List:
