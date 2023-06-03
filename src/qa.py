@@ -1,5 +1,5 @@
 import logging
-from typing import List, Optional, Tuple
+from typing import List, Optional
 
 from langchain.chat_models import ChatOpenAI
 from langchain.document_loaders import TextLoader, SeleniumURLLoader
@@ -44,9 +44,10 @@ def chat(
 
 
 if __name__ == "__main__":
-    chat(
+    response = chat(
         query="When was Japan first inhabited?",
         urls=[
             "https://en.wikipedia.org/wiki/Japan",
         ],
     )
+    print(response)
