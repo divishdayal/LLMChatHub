@@ -11,8 +11,10 @@ class FetchedContent(BaseModel):
 
 
 class QAOuput(BaseModel):
-    """Output data model for API. It follows the format that is expected from Vertex AI."""
-
     question: str
     answer: str
     sources: List
+
+
+class ChatResponse(BaseModel):
+    response: str

@@ -14,6 +14,11 @@ openai = "*"
 chromadb = "*"
 tiktoken = "*"
 tabulate = "*"
+sqlalchemy = "~=1.4"
+alembic = "~=1.7"
+fastapi = "*"
+starlette = "*"
+psycopg2_binary = "*"
 
 [dev-packages]
 jupyterlab = "==3.6.3"
