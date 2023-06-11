@@ -44,5 +44,5 @@ class UserCreate(BaseModel):
     username: str
 
 
-class Response(BaseModel):
+class ResponseMessage(BaseModel):
     message: str
