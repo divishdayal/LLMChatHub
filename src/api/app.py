@@ -4,7 +4,7 @@ from fastapi import Depends, FastAPI, Response, status
 from sqlalchemy.orm import Session
 
 from src.api import deps
-from src.api.chat import router as chat_router
+from src.api.endpoints.chat import router as chat_router
 from src.config import Config
 
 

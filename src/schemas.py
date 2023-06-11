@@ -36,3 +36,13 @@ class ChatBody(BaseModel):
     message: str
     user_id: int
     chat_id: Optional[int] = None
+
+
+class UserCreate(BaseModel):
+    email: str
+    name: str
+    username: str
+
+
+class Response(BaseModel):
+    message: str
