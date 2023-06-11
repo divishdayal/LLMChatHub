@@ -22,6 +22,8 @@ psycopg2_binary = "*"
 
 [dev-packages]
 jupyterlab = "==3.6.3"
+pytest = "*"
+pytest-mock = "*"
 
 [requires]
 python_version = "3.10"

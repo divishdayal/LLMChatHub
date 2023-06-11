@@ -1,7 +1,7 @@
-from pydantic import BaseSettings
+from typing import Any, Dict, Optional
 
 from pydantic import BaseSettings, Field, PostgresDsn, validator
-from typing import Any, Dict, Optional
+
 
 class DBConfig(BaseSettings):
     POSTGRES_SERVER: str = "localhost"
@@ -27,8 +27,9 @@ class DBConfig(BaseSettings):
 
 
 class Config(DBConfig):
+    PROJECT_NAME: str = "LLM_Magic"
     OPENAI_API_KEY: str = "placeholder"
 
 
-config = Config()
+api_config = Config()
 db_config = DBConfig()

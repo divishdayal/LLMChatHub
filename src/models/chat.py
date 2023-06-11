@@ -1,4 +1,4 @@
-from sqlalchemy import BIGINT, Column, ForeignKey, String
+from sqlalchemy import BIGINT, Boolean, Column, ForeignKey, String
 from sqlalchemy.orm import relationship
 
 from src.db.base_class import Base
@@ -11,6 +11,7 @@ class Message(Base):
 
     id = Column(BIGINT, primary_key=True, index=True, unique=True)
     message = Column(String, nullable=True)
+    is_ai = Column(Boolean, default=False)
 
     chat_id = Column(BIGINT, ForeignKey("chats.id"), nullable=False)
 
