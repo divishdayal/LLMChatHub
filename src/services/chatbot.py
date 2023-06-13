@@ -1,7 +1,8 @@
 import logging
+import tempfile
 from typing import List, Optional
 
-from langchain import OpenAI, LLMChain, ConversationChain, PromptTemplate
+from langchain import ConversationChain, LLMChain, OpenAI, PromptTemplate
 from langchain.chains import ConversationalRetrievalChain
 from langchain.document_loaders import SeleniumURLLoader, TextLoader
 from langchain.embeddings import OpenAIEmbeddings
@@ -16,13 +17,17 @@ logger = logging.getLogger(__name__)
 
 
 class ChatBot:
-    def __init__(self):
+    def __init__(
+        self,
+        text_files: Optional[List[str]] = [],
+        urls: Optional[List[str]] = [],
+    ):
         self._loaders = []
         self._chain = None
         self._msg_history = None
+        self._add_loaders(text_files, urls)
 
     def _add_loaders(self, text_files: List[str], urls: List[str]) -> List:
-        self._loaders = []
         for file_path in text_files:
             self._loaders.append(TextLoader(file_path))
 
@@ -49,11 +54,15 @@ class ChatBot:
                 _msg_history.add_user_message(m.message)
         self._msg_history = _msg_history
 
+    def add_text_loader(self, text_files: List[str]):
+        self._add_loaders(text_files, [])
+
+    def add_url_loader(self, urls: List[str]):
+        self._add_loaders([], urls)
+
     def generate(
         self,
         query: str,
-        text_files: Optional[List[str]] = [],
-        urls: Optional[List[str]] = [],
         messages: Optional[List[models.Message]] = [],
         mock_generate: Optional[bool] = api_config.MOCK_GENERATE,
     ) -> str:
@@ -67,9 +76,6 @@ class ChatBot:
         if mock_generate:
             return "mock response"
 
-        self._add_loaders(text_files, urls)
-
-
         if len(messages) > 0:
             self._compute_msg_history(messages)
 
@@ -81,6 +87,10 @@ class ChatBot:
             }
             if self._msg_history is not None:
                 kwargs["memory"] = self._msg_history
+            else:
+                kwargs["memory"] = ConversationBufferWindowMemory(
+                    k=2, memory_key="chat_history", return_messages=False
+                )
             qa = ConversationalRetrievalChain.from_llm(
                 **kwargs,
             )
@@ -89,8 +99,7 @@ class ChatBot:
         else:
             # to use without vectorstore docs
             prompt = PromptTemplate(
-                input_variables=["history", "human_input"],
-                template=PROMPT
+                input_variables=["history", "human_input"], template=PROMPT
             )
             kwargs = {
                 "llm": OpenAI(temperature=0),
@@ -106,3 +115,18 @@ class ChatBot:
             response = conv_chain.predict(human_input=query)
 
         return response
+
+
+if __name__ == "__main__":
+    cb = ChatBot()
+
+    # Example 1
+    # cb.add_url_loader(["https://python.langchain.com/en/latest/index.html"])
+    # print(cb.generate("The LangChain framework is designed for what?"))
+
+    # Example 2
+    temp = tempfile.NamedTemporaryFile()
+    with open(temp.name, "w") as f:
+        f.write("lite is a popular slang in bits pilani.")
+    cb.add_text_loader([temp.name])
+    print(cb.generate("give me a slang of bits pilani?"))
