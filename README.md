@@ -19,3 +19,15 @@ which can be copied to `.env` to begin with.
 ```
 pipenv run uvicorn src.api.main:app --reload --host 0.0.0.0 --port 8000
 ```
+
+## Run Generation locally
+
+### Using Service
+Run the service and send requests to it.
+<TODO: More on this>
+
+### Using CLI
+edit examples at the end of the file `src.services.chatbot` and then run:
+```
+pipenv run python3 -m src.services.chatbot
+```
