@@ -6,7 +6,7 @@ from src.db.base_class import Base
 from .mixin import TimestampMixin
 
 
-class Message(Base):
+class Message(TimestampMixin, Base):
     __tablename__ = "messages"
 
     id = Column(BIGINT, primary_key=True, index=True, unique=True)

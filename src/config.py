@@ -1,6 +1,12 @@
+import sys
 from typing import Any, Dict, Optional
 
 from pydantic import BaseSettings, Field, PostgresDsn, validator
+
+if "pytest" in sys.modules:
+    _ENV_FILE = "env.TEST"
+else:
+    _ENV_FILE = ".env"
 
 
 class DBConfig(BaseSettings):
@@ -29,6 +35,10 @@ class DBConfig(BaseSettings):
 class Config(DBConfig):
     PROJECT_NAME: str = "LLM_Magic"
     OPENAI_API_KEY: str = "placeholder"
+    MOCK_GENERATE: bool = False
+
+    class Config:
+        env_file: str = _ENV_FILE
 
 
 api_config = Config()

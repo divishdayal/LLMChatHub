@@ -19,6 +19,7 @@ class QAOuput(BaseModel):
 
 class ChatResponse(BaseModel):
     response: str
+    chat_id: int
 
 
 class Message(BaseModel):

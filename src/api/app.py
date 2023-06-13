@@ -15,7 +15,7 @@ def create_app(config: Config):
     )
 
     app.include_router(chat_router, prefix="/api_v1")
-    app.include_router(user_router, prefix="/api_v1")
+    app.include_router(user_router, prefix="/api_v1/user")
 
     @app.get("/livez", status_code=status.HTTP_200_OK, response_class=Response)
     def livez():
