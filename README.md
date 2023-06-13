@@ -31,3 +31,6 @@ edit examples at the end of the file `src.services.chatbot` and then run:
 ```
 pipenv run python3 -m src.services.chatbot
 ```
+
+_Note: make sure `.env` file created as mentioned in the section above. 
+And set the value of `OPENAI_API_KEY` in `.env` file._
