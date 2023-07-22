@@ -1,7 +1,7 @@
 from fastapi.testclient import TestClient
 from sqlalchemy.orm import Session
 
-from tests.utils import create_user
+from tests.utils import create_chat, create_user
 
 
 def test_chat_get(client: TestClient, db: Session):
@@ -25,3 +25,14 @@ def test_chat_get(client: TestClient, db: Session):
 
 def test_generate(client: TestClient, db: Session):
     pass
+
+
+def test_delete(client: TestClient, db: Session):
+    # create user
+    user_obj = create_user(db)
+    chat_id = create_chat(user_obj, client)
+
+    response = client.delete(
+        f"/api_v1/chat/{chat_id}",
+    )
+    assert response.status_code == 200, response.text

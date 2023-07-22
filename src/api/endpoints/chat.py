@@ -101,3 +101,35 @@ def generate(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"{traceback.format_exc()}",
         )
+
+
+@router.delete(
+    "/chat/{chat_id}",
+    status_code=status.HTTP_200_OK,
+    response_model=schemas.ResponseMessage,
+)
+def delete_chat(
+    chat_id: int,
+    db: Session = Depends(deps.get_db),
+) -> schemas.ResponseMessage:
+    """
+    delete chat
+    :param chat_id:
+    :param db:
+    :return:
+    """
+    try:
+        chat = db.query(Chat).filter(Chat.id == chat_id).first()
+        if not chat:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND, detail="Chat not found"
+            )
+
+        db.delete(chat)
+        db.commit()
+        return schemas.ResponseMessage(message=f"Chat #{chat_id} deleted successfully")
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"{traceback.format_exc()}",
+        )

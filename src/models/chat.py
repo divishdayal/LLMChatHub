@@ -25,4 +25,4 @@ class Chat(TimestampMixin, Base):
     user_id = Column(BIGINT, ForeignKey("users.id"), nullable=False)
     user = relationship("User", back_populates="chats")
 
-    messages = relationship("Message", back_populates="chat")
+    messages = relationship("Message", back_populates="chat", cascade="all")
