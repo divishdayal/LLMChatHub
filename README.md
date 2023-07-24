@@ -25,6 +25,11 @@ which can be copied to `.env` to begin with.
 pipenv run uvicorn src.api.main:app --reload --host 0.0.0.0 --port 8000
 ```
 
+## Running Tests
+```
+pipenv run pytest
+```
+
 ## Run Generation locally
 
 ### Using Service
