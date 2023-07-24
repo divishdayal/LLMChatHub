@@ -1,4 +1,9 @@
-# llm_magic
+# Large Language Model Chat Hub
+LLMChatHub is an open-source project that serves as a centralized hub for 
+deploying and managing multiple chatbots powered by Large Language Models (LLMs). 
+It provides a flexible and efficient way to store and access different 
+chatbot instances through a PostgreSQL database and offers a REST API 
+for seamless interactions using FastAPI.
 
 ## Setting up environment for Local Development
 Pipenv environment is used to install dependencies and run this repo.
